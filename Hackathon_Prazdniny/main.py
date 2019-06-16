@@ -6,7 +6,9 @@ from kivy.uix.button import Button
 import string
 from kivy.uix.popup import Popup
 from kivy.lang import Builder
-
+from kivy.uix.widget import Widget
+from kivy.uix.floatlayout import FloatLayout
+from kivy.properties import ObjectProperty
 
 class MyGrid(GridLayout):
 	def __init__(self, **kwargs):
@@ -36,16 +38,19 @@ class MyGrid(GridLayout):
 		result = ((int(name) / 15) * 0.5) / 16 * 10
 		result = round(result, 1)
 		print(f'Kazdou hodinu vypij: {result} dcl')
-		notification = SimpleButton()
+		mypopup = SimplePopup()
+		mypopup.open()
 
+class Widgets(Widget):
+	def btn(self):
+		fire_popup()
 
+class P(Popup):
+	pass
+		
 class MyApp(App):
 	def build(self):
 		return MyGrid()
-
-
-if __name__ == '__main__':
-    MyApp().run()
 
 
 # notifikace
@@ -53,14 +58,17 @@ class SimplePopup(Popup):
    pass
 
 class SimpleButton(Button):
-   text = MyGrid()
-   text.pressed(notification)
    def fire_popup(self):
        pops=SimplePopup()
+       show = P()
+       pops = Popup(title="Popup Window", content=show, size_hint=(None,None), size=(400,400))
        pops.open()
 
 class SampleApp(App):
    def build(self):
        return SimpleButton()
 
-SampleApp().run()
+if __name__ == '__main__':
+    MyApp().run()
+
+
